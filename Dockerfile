@@ -28,11 +28,11 @@ RUN python -m venv /py && \
         django-user && \
     mkdir -p /vol/web/media && \
     mkdir -p /vol/web/static && \
-    chown -R django-user:django-user /vol && \
-    chmod -R 766 /vol
+    chown -R django-user:django-user /vol
+
 
 COPY ./app /app
-
+RUN chmod -R 766 /vol
 ENV PATH="/py/bin:$PATH"
 
 USER django-user
