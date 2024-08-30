@@ -32,7 +32,7 @@ RUN python -m venv /py && \
 
 
 COPY ./app /app
-RUN chmod -R 766 /vol
+RUN chmod -R 755 /vol
 ENV PATH="/py/bin:$PATH"
 
 USER django-user
