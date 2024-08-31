@@ -54,7 +54,6 @@ class RecipeViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         """Retrieves recipes for authenticated user."""
-        # return self.queryset.filter(user=self.request.user).order_by('-id')
         tags = self.request.query_params.get('tags')
         ingredients = self.request.query_params.get('ingredients')
         queryset = self.queryset
@@ -101,8 +100,8 @@ class RecipeViewSet(viewsets.ModelViewSet):
             OpenApiParameter(
                 'assigned_only',
                 OpenApiTypes.INT, enum=[0, 1],
-                description='Filter by items assigned to recipe.'
-            )
+                description='Filter by items assigned to recipe.',
+            ),
         ]
     )
 )
@@ -117,7 +116,7 @@ class BaseRecipeAttrViewSet(mixins.DestroyModelMixin,
     def get_queryset(self):
         """Filter queryset to authenticated user."""
         assigned_only = bool(
-            int(self.request.query_params.get('assigned_onnly', 0))
+            int(self.request.query_params.get('assigned_only', 0))
         )
         queryset = self.queryset
         if assigned_only:
@@ -125,7 +124,7 @@ class BaseRecipeAttrViewSet(mixins.DestroyModelMixin,
 
         return queryset.filter(
             user=self.request.user
-            ).order_by('-name').distinct()
+        ).order_by('-name').distinct()
 
 
 class TagViewSet(BaseRecipeAttrViewSet):
